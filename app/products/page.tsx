@@ -1,3 +1,4 @@
+"use client";
 import {
   Card,
   CardContent,
@@ -5,15 +6,18 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Product, productsList } from "@/constants/products-list";
+import { Product } from "@/constants/products-list";
+import { useApplicationContext } from "@/context/application-context";
 import Link from "next/link";
 
 export default function Products() {
+  const { products } = useApplicationContext();
+
   return (
     <div className="page">
       <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5">
-        {productsList.map((product) => (
-          <ProductCard product={product} />
+        {products.map((product) => (
+          <ProductCard product={product} key={product.id} />
         ))}
       </div>
     </div>
@@ -23,7 +27,7 @@ export default function Products() {
 function ProductCard({ product }: { product: Product }) {
   return (
     <Link href={"/product/" + product.id}>
-      <Card>
+      <Card className="h-full">
         {/* <Image
         alt={product.name}
         width={1080}

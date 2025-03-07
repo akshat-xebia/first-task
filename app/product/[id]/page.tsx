@@ -1,5 +1,6 @@
+"use client";
 import AddToCartButton from "@/components/ui/add-to-cart-button";
-import { productsList } from "@/constants/products-list";
+import { useApplicationContext } from "@/context/application-context";
 import { redirect } from "next/navigation";
 
 interface ProductPageProps {
@@ -11,9 +12,16 @@ export default function ProductPage({ params }: ProductPageProps) {
 
   if (isNaN(id)) {
     redirect("/not-found");
+    return null;
   }
 
-  const productDetails = productsList[id - 1];
+  const { products } = useApplicationContext();
+  const productDetails = products.find((product) => product.id === id);
+
+  if (!productDetails) {
+    redirect("/not-found");
+    return null;
+  }
 
   return (
     <div className="page grid grid-cols-5 gap-8">

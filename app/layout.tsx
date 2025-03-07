@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 import { Toaster } from "sonner";
+import { ApplicationProvider } from "@/context/application-context";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -34,9 +35,11 @@ export default function RootLayout({
       <body
         className={`${inter.className} flex flex-col min-h-screen h-full antialiased`}
       >
-        <Navbar />
-        {children}
-        <Toaster />
+        <ApplicationProvider>
+          <Navbar />
+          {children}
+          <Toaster />
+        </ApplicationProvider>
       </body>
     </html>
   );
