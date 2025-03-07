@@ -10,12 +10,14 @@ interface ProductPageProps {
 export default function ProductPage({ params }: ProductPageProps) {
   const id = Number(params.id);
 
+  // Call the hook at the top level before any conditional returns
+  const { products } = useApplicationContext();
+
   if (isNaN(id)) {
     redirect("/not-found");
     return null;
   }
 
-  const { products } = useApplicationContext();
   const productDetails = products.find((product) => product.id === id);
 
   if (!productDetails) {
